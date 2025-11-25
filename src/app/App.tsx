@@ -1,4 +1,4 @@
-import LoginPage from "@/pages/LoginPage";
+import LoginPage from "@/pages/login-page";
 
 function App() {
   return <LoginPage />
