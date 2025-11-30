@@ -1,12 +1,9 @@
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { LayoutDashboard, CheckSquare, FileText, DollarSign, Target, LogOut } from "lucide-react"
+import { NavLink } from "react-router-dom"
+import { LayoutDashboard, List, CheckSquare, FileText, DollarSign, Target, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 export default function Sidebar() {
-  const pathname = usePathname()
-
   const menuItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { href: "/dashboard/checklists", icon: CheckSquare, label: "Checklists" },
@@ -33,20 +30,21 @@ export default function Sidebar() {
       <nav className="flex-1 p-4 space-y-2">
         {menuItems.map((item) => {
           const Icon = item.icon
-          const isActive = pathname === item.href
           return (
-            <Link key={item.href} href={item.href}>
-              <Button
-                variant="ghost"
-                className={cn(
-                  "w-full justify-start gap-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                  isActive && "bg-sidebar-primary text-sidebar-primary-foreground",
-                )}
-              >
-                <Icon className="w-5 h-5" />
-                {item.label}
-              </Button>
-            </Link>
+            <NavLink key={item.href} to={item.href} end={item.href === "/dashboard"} className="w-full">
+              {({ isActive }) => (
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    "w-full justify-start gap-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                    isActive && "bg-sidebar-primary text-sidebar-primary-foreground",
+                  )}
+                >
+                  <Icon className="w-5 h-5" />
+                  {item.label}
+                </Button>
+              )}
+            </NavLink>
           )
         })}
       </nav>

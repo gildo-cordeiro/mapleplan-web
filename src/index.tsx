@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/login.css';
 import App from './app/app';
 import reportWebVitals from './reportWebVitals';
 

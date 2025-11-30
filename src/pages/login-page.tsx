@@ -1,5 +1,6 @@
 
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import LoginLayout from "@/components/login/login-layout"
 import LoginForm from "@/components/login/login-form"
 import OnboardingModal from "@/components/onboarding-modal"
@@ -13,9 +14,12 @@ export default function LoginPage() {
     setShowOnboarding(true)
   }
 
+  const navigate = useNavigate()
+
   const handleOnboardingComplete = () => {
     setShowOnboarding(false)
     // Navigate to dashboard or next page
+    navigate("/dashboard")
   }
 
   return (
