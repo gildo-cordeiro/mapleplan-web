@@ -1,11 +1,9 @@
-"use client"
-
 import { useState } from "react"
 import { DashboardLayout } from "@/components/dashboard/dashboard-layout"
-import { MasterChecklistHeader } from "@/components/dashboard/checklist/master-checklist-header"
-import { ChecklistFiltersToolbar } from "@/components/dashboard/checklist/checklist-filters-toolbar"
-import { ChecklistMasterList } from "@/components/dashboard/checklist/checklist-master-list"
-import { CreateChecklistTaskModal } from "@/components/dashboard/checklist/create-checklist-task-modal"
+import { MasterChecklistHeader } from "@/components/checklist/master-checklist-header"
+import { ChecklistFiltersToolbar } from "@/components/checklist/checklist-filters-toolbar"
+import { ChecklistMasterList } from "@/components/checklist/checklist-master-list"
+import { CreateChecklistTaskModal } from "@/components/checklist/create-checklist-task-modal"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 
