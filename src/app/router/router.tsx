@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import LoginPage from "@/pages/login/page"
-import DashboardPage from "@/pages/dashboard/page"
-import ChecklistPage from "@/pages/dashboard/checklist/page"
-import FinancesPage from "@/pages/dashboard/finances/page"
-import DocumentsPage from "@/pages/dashboard/documents/page"
-import GoalsPage from "@/pages/dashboard/goals/page"
+import LoginPage from "@/pages/login/LoginPage"
+import DashboardPage from "@/pages/dashboard/DashboardPage"
+import ChecklistPage from "@/pages/dashboard/checklist/CheckListPage"
+import FinancesPage from "@/pages/dashboard/finances/FinancePage"
+import DocumentsPage from "@/pages/dashboard/documents/DocumentsPage"
+import GoalsPage from "@/pages/dashboard/goals/GoalsPage"
 
 export default function AppRouter() {
   return (

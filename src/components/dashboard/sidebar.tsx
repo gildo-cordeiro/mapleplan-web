@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 import { LayoutDashboard, List, CheckSquare, FileText, DollarSign, Target, LogOut } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils"
 
 export default function Sidebar() {
