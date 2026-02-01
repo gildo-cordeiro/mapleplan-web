@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/Label"
 import { AlertCircle, Eye, EyeOff } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/Alert"
+import { authService } from "@/services/authService"
 
 interface LoginFormProps {
   onAccountCreated?: (email: string) => void
@@ -24,7 +25,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.SubmitEvent) => {
     e.preventDefault()
     setError("")
 
@@ -44,16 +45,24 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
     }
 
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-      onAccountCreated?.(signupEmail)
+    try {
+      const response = await authService.signUp(signupEmail, signupPassword)
+
+      onAccountCreated?.(response.user.email)
       setSignupEmail("")
       setSignupPassword("")
       setConfirmPassword("")
-    }, 1000)
+    } catch (err: any) {
+      setError(
+        err.response?.data?.message ||
+        "Erro ao criar a conta. Tente novamente."
+      )
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.SubmitEvent) => {
     e.preventDefault()
     setError("")
 
@@ -63,22 +72,33 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
     }
 
     setLoading(true)
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false)
-      onAccountCreated?.(loginEmail)
+    try {
+      const response = await authService.login(loginEmail, loginPassword)
+      onAccountCreated?.(response.user.email)
       setLoginEmail("")
       setLoginPassword("")
-    }, 1000)
+    } catch (err: any) {
+      setError(
+        err.response?.data?.message ||
+        "Erro ao fazer login. Tente novamente."
+      )
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleForgotPassword = () => {
+  const handleForgotPassword = async () => {
     if (!loginEmail) {
       setError("Por favor, insira seu email")
       return
     }
-    // Handle forgot password
-    alert("Link de recuperação enviado para " + loginEmail)
+    try {
+      await authService.forgotPassword(loginEmail)
+      setError("")
+      alert("Link de recuperação enviado para " + loginEmail)
+    } catch (err: any) {
+      setError("Erro ao enviar link. Tente novamente.")
+    }
   }
 
   return (

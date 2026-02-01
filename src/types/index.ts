@@ -1,17 +1,8 @@
 // Global types for the application
-export interface User {
-  id: string
-  email: string
-  firstName: string
-  lastName: string
+interface ImportMetaEnv {
+  readonly VITE_API_URL: string
 }
 
-export interface ErrorResponse {
-  message: string
-  code?: string
-}
-
-export interface AuthResponse {
-  user: User
-  token: string
+interface ImportMeta {
+  readonly env: ImportMetaEnv
 }

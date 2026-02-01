@@ -18,7 +18,6 @@ export default function LoginPage() {
 
   const handleOnboardingComplete = () => {
     setShowOnboarding(false)
-    // Navigate to dashboard or next page
     navigate("/dashboard")
   }
 
