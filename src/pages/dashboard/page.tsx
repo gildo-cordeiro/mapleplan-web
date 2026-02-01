@@ -7,10 +7,10 @@ import DocumentAlertWidget from "@/components/dashboard/widgets/document-alert-w
 import GoalsWidget from "@/components/dashboard/widgets/goals-widget"
 
 export default function DashboardPage() {
-  const [coupleNames] = useState({ partner1: "João", partner2: "Maria" })
+  const [coupleNames] = useState({ partner1: "Gildo", partner2: "Jenny" })
   const [progress] = useState({
     currentPhase: "Fase 1: Pré-Partida",
-    percentage: 25,
+    percentage: 0,
   })
 
   return (
@@ -20,13 +20,11 @@ export default function DashboardPage() {
 
         <div className="px-4 py-8 md:px-6 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-3">
-            {/* Left column - full height */}
             <div className="lg:col-span-2 space-y-6">
               <NextActionsWidget />
               <GoalsWidget />
             </div>
 
-            {/* Right column */}
             <div className="space-y-6">
               <FinancialAlertWidget />
               <DocumentAlertWidget />

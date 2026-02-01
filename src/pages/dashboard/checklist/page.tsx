@@ -15,7 +15,7 @@ export default function ChecklistPage() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col gap-6 h-full">
+      <div className="flex flex-col gap-6 h-full p-6">
         {/* Header with phase tabs */}
         <MasterChecklistHeader activePhase={activePhase} onPhaseChange={setActivePhase} />
 

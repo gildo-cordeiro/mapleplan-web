@@ -66,7 +66,9 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
     // Simulate API call
     setTimeout(() => {
       setLoading(false)
-      // Handle login
+      onAccountCreated?.(loginEmail)
+      setLoginEmail("")
+      setLoginPassword("")
     }, 1000)
   }
 

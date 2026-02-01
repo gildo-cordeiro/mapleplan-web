@@ -45,7 +45,7 @@ export default function FinancesSummary() {
         return (
           <Card key={item.title} className="border-none shadow-sm">
             <CardHeader className={`pb-3 ${item.bgColor}`}>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-5">
                 <CardTitle className="text-sm font-medium text-gray-600">{item.title}</CardTitle>
                 <Icon className={`h-5 w-5 ${item.color}`} />
               </div>
