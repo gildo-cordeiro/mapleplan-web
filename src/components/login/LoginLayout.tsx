@@ -1,5 +1,6 @@
 import type React from "react"
 import MapleIcon from '@/components/MapleIcon'
+import ProvincesCarousel from '@/components/login/ProvincesCarousel'
 
 export default function LoginLayout({
   children,
@@ -38,6 +39,7 @@ export default function LoginLayout({
           <p className="text-amber-50 text-lg opacity-90">
             Planeje sua imigração com confiança e segurança ao lado do seu parceiro
           </p>
+          <ProvincesCarousel />
         </div>
 
         {/* Decorative Element */}
