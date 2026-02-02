@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/Input"
 import { Button } from "@/components/ui/Button"
 import { Label } from "@/components/ui/Label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
+import { onboardingService } from "@/services/onboardingService"
 
 interface OnboardingModalProps {
   email: string
@@ -19,7 +20,7 @@ export default function OnboardingModal({ email, onComplete }: OnboardingModalPr
   const [immigrationGoal, setImmigrationGoal] = useState("")
   const [loading, setLoading] = useState(false)
 
-  const handleComplete = async (e: React.FormEvent) => {
+  const handleComplete = async (e: React.SubmitEvent) => {
     e.preventDefault()
 
     if (!partner1Name || !immigrationGoal) {
@@ -28,11 +29,14 @@ export default function OnboardingModal({ email, onComplete }: OnboardingModalPr
     }
 
     setLoading(true)
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false)
+    try {
+      await onboardingService.completeOnboarding(email, partner1Name, partner2Name, immigrationGoal)
       onComplete()
-    }, 1000)
+    } catch (error) {
+      alert("Ocorreu um erro ao completar o onboarding. Tente novamente.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

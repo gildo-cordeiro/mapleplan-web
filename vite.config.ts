@@ -17,6 +17,12 @@ export default defineConfig({
       host: 'localhost',
       port: 5173,
     },
+    proxy: {
+      "/api": {
+        target: "http://host.docker.internal:8080",
+        changeOrigin: true,
+      },
+    },
     watch: {
       usePolling: true,
       interval: 100,
