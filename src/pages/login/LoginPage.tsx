@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import LoginLayout from '@/components/login/LoginLayout'
 import LoginForm from '@/components/login/LoginForm'
-import OnboardingModal from '@/components/OnboardingModal'
+import OnboardingModal from '@/components/onboarding/OnboardingModal'
 
 export default function LoginPage() {
   const [showOnboarding, setShowOnboarding] = useState(false)
