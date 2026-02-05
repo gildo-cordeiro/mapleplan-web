@@ -14,18 +14,16 @@ export default function DashboardPage() {
   const navigate = useNavigate()
   const { isAuthenticated, logout } = useAuth()
   const { user, loading, error } = useUserData()
-  const [coupleNames, setCoupleNames] = useState({ partner1: "Gildo", partner2: "Jenny" })
+  const [coupleNames, setCoupleNames] = useState<{ partner1: string | undefined; partner2: string | undefined }>()
   const [progress] = useState({
     currentPhase: "Fase 1: Pré-Partida",
     percentage: 0,
   })
-
-  // Atualizar nomes do casal com os dados do usuário
   useEffect(() => {
     if (user) {
       setCoupleNames({
-        partner1: user.name || "Usuário",
-        partner2: user.partnerName || "Parceiro"
+        partner1: user.name,
+        partner2: user.partnerName,
       })
     }
   }, [user])

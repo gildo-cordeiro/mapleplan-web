@@ -1,7 +1,7 @@
 import { Progress } from "@/components/ui/Progress"
 
 interface DashboardHeaderProps {
-  couple: { partner1: string; partner2: string }
+  couple?: { partner1: string | undefined; partner2: string | undefined }
   progress: { currentPhase: string; percentage: number }
 }
 
@@ -9,9 +9,17 @@ export default function DashboardHeader({ couple, progress }: DashboardHeaderPro
   return (
     <div className="bg-gradient-to-r from-[#dc143c] to-[#ff6347] text-white shadow-lg">
       <div className="px-4 py-8 md:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold mb-6">
-          Bem-vindos, {couple.partner1} e {couple.partner2}! 🍁
-        </h1>
+        {
+          couple && couple.partner1 && couple.partner2 ? (
+            <h1 className="text-2xl font-bold mb-4">
+              Bem-vindos, {couple.partner1} & {couple.partner2}!
+            </h1>
+          ) : (
+            <h1 className="text-2xl font-bold mb-4">
+              Bem-vindo(a)!
+            </h1>
+          )
+        }
 
         <div className="space-y-3">
           <div className="flex items-center justify-between">

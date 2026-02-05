@@ -5,6 +5,13 @@ import { getHeaders } from '@/lib/api'
 const API_URL = import.meta.env.VITE_API_URL
 
 export const goalService = {
+
+  getWidgetGoals: async (token: string): Promise<Goal[]> => {
+    const response = await axios.get(`${API_URL}/goals/widget`, {
+      headers: getHeaders(token)
+    })
+    return response.data
+  },
   /**
    * Busca as metas do usuário
    */
