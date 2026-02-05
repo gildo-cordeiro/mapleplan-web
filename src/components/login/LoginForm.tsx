@@ -1,5 +1,7 @@
 import type React from "react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "@/app/context/AuthContext"
 import { Input } from "@/components/ui/Input"
 import { Button } from "@/components/ui/Button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
@@ -14,6 +16,8 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ onAccountCreated }: LoginFormProps) {
+  const navigate = useNavigate()
+  const { fetchUser } = useAuth()
   const [activeTab, setActiveTab] = useState("login")
   const [loginEmail, setLoginEmail] = useState("")
   const [loginPassword, setLoginPassword] = useState("")
@@ -47,7 +51,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
     setLoading(true)
     try {
       const response = await authService.signUp(signupEmail, signupPassword)
-
+      // Signup: chama callback para abrir modal de onboarding
       onAccountCreated?.(response.user.email)
       setSignupEmail("")
       setSignupPassword("")
@@ -73,15 +77,15 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
 
     setLoading(true)
     try {
-      const response = await authService.login(loginEmail, loginPassword)
-      onAccountCreated?.(response.user.email)
-      setLoginEmail("")
-      setLoginPassword("")
+      await authService.login(loginEmail, loginPassword)
+      await fetchUser()
+      navigate("/dashboard")
     } catch (err: any) {
-      setError(
-        err.response?.data?.message ||
+      const message =
+        err?.response?.data?.message ||
+        (err instanceof Error ? err.message : null) ||
         "Erro ao fazer login. Tente novamente."
-      )
+      setError(message)
     } finally {
       setLoading(false)
     }

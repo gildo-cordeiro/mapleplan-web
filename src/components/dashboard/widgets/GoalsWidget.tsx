@@ -1,8 +1,9 @@
 "use client"
 
-import { Flag, CheckCircle2, Circle } from "lucide-react"
+import { Flag, CheckCircle2, Circle, Loader } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Badge } from "@/components/ui/Badge"
+import { useGoals } from "@/hooks/useGoals"
 
 interface Goal {
   id: string
@@ -11,23 +12,7 @@ interface Goal {
 }
 
 export default function GoalsWidget() {
-  const goals: Goal[] = [
-    {
-      id: "1",
-      title: "Obter a Carta de Aceitação",
-      status: "in-progress",
-    },
-    {
-      id: "2",
-      title: "Passar no Teste de Língua Inglesa",
-      status: "completed",
-    },
-    {
-      id: "3",
-      title: "Solicitar Permissão de Trabalho Aberto",
-      status: "pending",
-    },
-  ]
+  const { goals, loading, error } = useGoals()
 
   const getStatusBadge = (status: string) => {
     if (status === "completed") return "Concluído"
@@ -56,24 +41,39 @@ export default function GoalsWidget() {
         <CardDescription>Seus objetivos de alto nível</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-3">
-          {goals.map((goal) => (
-            <div
-              key={goal.id}
-              className="flex items-center justify-between p-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors"
-            >
-              <div className="flex items-center gap-3 flex-1">
-                {getIcon(goal.status)}
-                <span
-                  className={goal.status === "completed" ? "line-through text-muted-foreground" : "text-foreground"}
-                >
-                  {goal.title}
-                </span>
+        {loading ? (
+          <div className="flex items-center justify-center py-8">
+            <Loader className="w-5 h-5 animate-spin text-muted-foreground" />
+            <p className="ml-2 text-sm text-muted-foreground">Carregando metas...</p>
+          </div>
+        ) : error ? (
+          <div className="text-sm text-red-600 dark:text-red-400 py-4">
+            Erro ao carregar metas: {error}
+          </div>
+        ) : goals.length === 0 ? (
+          <div className="text-sm text-muted-foreground py-4 text-center">
+            Nenhuma meta criada
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {goals.map((goal) => (
+              <div
+                key={goal.id}
+                className="flex items-center justify-between p-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors"
+              >
+                <div className="flex items-center gap-3 flex-1">
+                  {getIcon(goal.status)}
+                  <span
+                    className={goal.status === "completed" ? "line-through text-muted-foreground" : "text-foreground"}
+                  >
+                    {goal.title}
+                  </span>
+                </div>
+                <Badge className={getStatusColor(goal.status)}>{getStatusBadge(goal.status)}</Badge>
               </div>
-              <Badge className={getStatusColor(goal.status)}>{getStatusBadge(goal.status)}</Badge>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   )

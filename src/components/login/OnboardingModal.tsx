@@ -9,8 +9,8 @@ import { Label } from "@/components/ui/Label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
 import { onboardingService } from "@/services/onboardingService"
 import { AlertCircle } from "lucide-react"
-import { Alert, AlertDescription } from "./ui/Alert"
-import { PartnerSelect } from "./onboarding/PartnerSelect"
+import { Alert, AlertDescription } from "../ui/Alert"
+import { PartnerSelect } from "../onboarding/PartnerSelect"
 
 interface OnboardingModalProps {
   email: string

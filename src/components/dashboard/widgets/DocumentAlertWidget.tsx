@@ -1,9 +1,10 @@
 "use client"
 
-import { AlertTriangle, FileCheck } from "lucide-react"
+import { AlertTriangle, FileCheck, Loader } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Alert, AlertDescription } from "@/components/ui/Alert"
 import { Button } from "@/components/ui/Button"
+import { useDocuments } from "@/hooks/useDocuments"
 
 interface Document {
   id: string
@@ -14,31 +15,7 @@ interface Document {
 }
 
 export default function DocumentAlertWidget() {
-  const documents: Document[] = [
-    {
-      id: "1",
-      name: "Passaporte",
-      partner: "João",
-      expiryDate: "2026-01-15",
-      daysUntilExpiry: 51,
-    },
-    {
-      id: "2",
-      name: "Carta de Referência",
-      partner: "Maria",
-      expiryDate: "2025-11-30",
-      daysUntilExpiry: 5,
-    },
-    {
-      id: "3",
-      name: "Comprovante de Fundos",
-      partner: "João",
-      expiryDate: "2026-06-20",
-      daysUntilExpiry: 208,
-    },
-  ]
-
-  const criticalDocuments = documents.filter((doc) => doc.daysUntilExpiry < 60)
+  const { criticalDocuments, loading, error } = useDocuments()
 
   return (
     <Card>
@@ -48,7 +25,16 @@ export default function DocumentAlertWidget() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {criticalDocuments.length > 0 ? (
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <Loader className="w-5 h-5 animate-spin text-muted-foreground" />
+              <p className="ml-2 text-sm text-muted-foreground">Carregando documentos...</p>
+            </div>
+          ) : error ? (
+            <div className="text-sm text-red-600 dark:text-red-400 py-4">
+              Erro ao carregar documentos: {error}
+            </div>
+          ) : criticalDocuments.length > 0 ? (
             criticalDocuments.map((doc) => (
               <Alert key={doc.id} className="border-[#dc143c] bg-[#dc143c]/10">
                 <AlertTriangle className="h-4 w-4 text-[#dc143c]" />

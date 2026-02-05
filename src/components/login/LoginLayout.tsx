@@ -1,5 +1,5 @@
 import type React from "react"
-import MapleIcon from '@/components/MapleIcon'
+import MapleIcon from '@/components/ui/MapleIcon'
 import ProvincesCarousel from '@/components/login/ProvincesCarousel'
 
 export default function LoginLayout({

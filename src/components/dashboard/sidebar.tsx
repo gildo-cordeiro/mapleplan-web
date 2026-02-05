@@ -1,9 +1,20 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { LayoutDashboard, List, CheckSquare, FileText, DollarSign, Target, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/app/context/AuthContext"
 
 export default function Sidebar() {
+  const navigate = useNavigate()
+  const { isAuthenticated, logout } = useAuth()
+
+  const handleLogout = () => {
+    if (isAuthenticated) {
+      logout()
+    }
+    navigate('/login')
+  }
+
   const menuItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { href: "/dashboard/checklists", icon: CheckSquare, label: "Checklists" },
@@ -52,8 +63,9 @@ export default function Sidebar() {
       {/* Logout button */}
       <div className="p-4 border-t border-sidebar-border">
         <Button
-          variant="ghost"
-          className="w-full justify-start gap-3 text-sidebar-foreground hover:bg-destructive hover:text-destructive-foreground"
+          variant="destructive"
+          className="w-full justify-start gap-3"
+          onClick={handleLogout}
         >
           <LogOut className="w-5 h-5" />
           Sair

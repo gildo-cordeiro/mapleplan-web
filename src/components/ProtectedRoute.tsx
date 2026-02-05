@@ -3,9 +3,9 @@ import { Navigate, Outlet } from "react-router-dom"
 import { LoadingScreen } from "./login/LoadingScreen"
 
 export function ProtectedRoute() {
-  const { token, isLoading } = useAuth()
+  const { isAuthenticated, isLoading } = useAuth()
   
   if (isLoading) return <LoadingScreen />
   
-  return token ? <Outlet /> : <Navigate to="/login" />
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }

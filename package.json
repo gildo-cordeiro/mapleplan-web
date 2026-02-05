@@ -83,7 +83,8 @@
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "echo \"No tests configured.\" && exit 0"
+    "test": "echo \"No tests configured.\" && exit 0",
+    "debbug": "vite --host --port 5173"
   },
   "eslintConfig": {
     "extends": [

@@ -1,16 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-
-interface User {
-  id: string
-  email: string
-}
-
-interface AuthContextType {
-  user: User | null
-  token: string | null
-  isLoading: boolean
-  logout: () => void
-}
+import { AuthContextType, User } from '@/types'
+import { userService } from '@/services/userService'
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
@@ -23,9 +13,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const savedToken = localStorage.getItem('token')
     if (savedToken) {
       setToken(savedToken)
+      fetchUserData(savedToken)
+    } else {
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }, [])
+
+  // Função auxiliar para buscar dados do usuário ao carregar o token
+  const fetchUserData = async (authToken: string) => {
+    try {
+      const userData = await userService.getCompleteUser(authToken)
+      setUser(userData)
+    } catch (error) {
+      console.error('Erro ao buscar dados do usuário:', error)
+      // Se falhar, limpar o token
+      localStorage.removeItem('token')
+      setToken(null)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Função para buscar os dados do usuário autenticado
+  const fetchUser = async () => {
+    const authToken = token ?? localStorage.getItem('token')
+    if (!authToken) {
+      setIsLoading(false)
+      throw new Error('Token nao encontrado')
+    }
+    setIsLoading(true)
+    if (!token) {
+      setToken(authToken)
+    }
+    try {
+      const userData = await userService.getCompleteUser(authToken)
+      setUser(userData)
+    } catch (error) {
+      console.error('Erro ao buscar dados do usuário:', error)
+      throw error instanceof Error ? error : new Error('Erro ao buscar dados do usuario')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const logout = () => {
     setUser(null)
@@ -33,8 +62,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem('token')
   }
 
+  const isAuthenticated = !!token && !!user
+
   return (
-    <AuthContext.Provider value={{ user, token, isLoading, logout }}>
+    <AuthContext.Provider value={{ user, token, isLoading, isAuthenticated, fetchUser, logout }}>
       {children}
     </AuthContext.Provider>
   )
