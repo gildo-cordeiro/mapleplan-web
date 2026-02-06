@@ -7,13 +7,13 @@ interface GoalsPhaseNavigationProps {
   onPhaseChange: (phase: string) => void
 }
 
-export function GoalsPhaseNavigation({ activePhase, onPhaseChange }: GoalsPhaseNavigationProps) {
-  const phases = [
-    { id: "pre-departure", label: "Pré-Partida" },
-    { id: "arrival", label: "Chegada" },
-    { id: "post-arrival", label: "Adaptação" },
-  ]
+const phases = [
+  { id: "pre-departure", label: "Pré-Partida" },
+  { id: "arrival", label: "Chegada" },
+  { id: "post-arrival", label: "Adaptação" },
+]
 
+export function GoalsPhaseNavigation({ activePhase, onPhaseChange }: GoalsPhaseNavigationProps) {
   return (
     <Tabs value={activePhase} onValueChange={onPhaseChange}>
       <TabsList className="grid w-full grid-cols-3">

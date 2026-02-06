@@ -9,10 +9,14 @@ import { GoalsList } from '@/components/goals/GoalsList'
 import { CreateGoalModal } from '@/components/goals/CreateGoalModal'
 import { Button } from "@/components/ui/Button"
 import { Plus } from "lucide-react"
+import { useGoals } from "@/hooks/useGoals"
 
 export default function GoalsPage() {
   const [activePhase, setActivePhase] = useState("pre-departure")
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const { goals, loading, error } = useGoals()
+  
+  const filteredGoals = goals.filter(goal => goal.phase === activePhase)
 
   return (
     <DashboardLayout>
@@ -28,7 +32,7 @@ export default function GoalsPage() {
 
         {/* Goals List */}
         <div className="flex-1 overflow-y-auto">
-          <GoalsList phase={activePhase} />
+          <GoalsList goals={filteredGoals} loading={loading} error={error} />
         </div>
 
         {/* Floating Action Button (Mobile) */}

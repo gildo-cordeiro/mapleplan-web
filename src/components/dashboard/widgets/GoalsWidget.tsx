@@ -12,19 +12,19 @@ export default function GoalsWidget() {
   const navigate = useNavigate()
   const { goals, loading, error } = useGoals()
 
-  const getStatusBadge = (status: string) => {
+  const getStatusBadge = (status: GoalStatus) => {
     if (status === GoalStatus.COMPLETED) return "Concluído"
     if (status === GoalStatus.IN_PROGRESS) return "Em Andamento"
     return "Pendente"
   }
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: GoalStatus) => {
     if (status === GoalStatus.COMPLETED) return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
     if (status === GoalStatus.IN_PROGRESS) return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
     return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
   }
 
-  const getIcon = (status: string) => {
+  const getIcon = (status: GoalStatus) => {
     if (status === GoalStatus.COMPLETED) return <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />
     return <Circle className="w-5 h-5 text-muted-foreground" />
   }
@@ -52,14 +52,14 @@ export default function GoalsWidget() {
           <div className="text-sm text-muted-foreground py-4 text-center">
             Nenhuma meta criada
             <div className="pt-3">
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => navigate("/dashboard/goals")}
-                >
-                  Criar Meta
-                </Button>
-              </div>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => navigate("/dashboard/goals")}
+              >
+                Criar Meta
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="space-y-3">
@@ -70,11 +70,18 @@ export default function GoalsWidget() {
               >
                 <div className="flex items-center gap-3 flex-1">
                   {getIcon(goal.status)}
-                  <span
-                    className={goal.status === "completed" ? "line-through text-muted-foreground" : "text-foreground"}
-                  >
-                    {goal.title}
-                  </span>
+                  <div className="flex-1">
+                    <span
+                      className={goal.status === GoalStatus.COMPLETED ? "line-through text-muted-foreground" : "text-foreground"}
+                    >
+                      {goal.title}
+                    </span>
+                    {goal.assignedTo && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Atribuído a: {goal.assignedTo}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <Badge className={getStatusColor(goal.status)}>{getStatusBadge(goal.status)}</Badge>
               </div>
