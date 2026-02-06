@@ -14,21 +14,16 @@ export default function DashboardPage() {
   const navigate = useNavigate()
   const { isAuthenticated, logout } = useAuth()
   const { user, loading, error } = useUserData()
-  const [coupleNames, setCoupleNames] = useState<{ partner1: string | undefined; partner2: string | undefined }>()
+  //TODO: Buscar progresso real do usuário
   const [progress] = useState({
     currentPhase: "Fase 1: Pré-Partida",
     percentage: 0,
   })
-  useEffect(() => {
-    if (user) {
-      setCoupleNames({
-        partner1: user.name,
-        partner2: user.partnerName,
-      })
-    }
-  }, [user])
-
-  // Se não autenticado
+  
+  const coupleNames = {
+    partner1: user?.firstName,
+    partner2: user?.partnerFirstName,
+  }
   if (!isAuthenticated) {
     return (
       <DashboardLayout>
@@ -54,7 +49,6 @@ export default function DashboardPage() {
     )
   }
 
-  // Se carregando
   if (loading) {
     return (
       <DashboardLayout>
@@ -68,7 +62,6 @@ export default function DashboardPage() {
     )
   }
 
-  // Se há erro
   if (error) {
     const errorMessage = error.toLowerCase().includes('token')
       ? 'Sessao expirada ou invalida. Faca login novamente.'

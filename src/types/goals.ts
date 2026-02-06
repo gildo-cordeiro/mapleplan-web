@@ -17,8 +17,12 @@ export enum GoalStatus {
 export interface Goal {
   id: string
   title: string
+  targetAmount: number
+  currentAmount: number
   description?: string
   status: GoalStatus
+  phase: string
+  priority: number
   dueDate?: string
-  progress?: number
+  progress: number
 }

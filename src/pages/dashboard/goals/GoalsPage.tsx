@@ -32,7 +32,7 @@ export default function GoalsPage() {
         </div>
 
         {/* Floating Action Button (Mobile) */}
-        <div className="md:hidden fixed bottom-24 right-4">
+        <div className="fixed bottom-24 right-4">
           <Button
             size="lg"
             className="rounded-full shadow-lg w-14 h-14 flex items-center justify-center bg-[var(--maple-primary)] hover:bg-[var(--maple-dark)]"

@@ -19,7 +19,7 @@ export function GoalsStats() {
       label: "Em Progresso",
       value: "4",
       icon: TrendingUp,
-      color: "bg-[var(--maple-primary)] bg-opacity-10 text-[var(--maple-primary)]",
+      color: "bg-yellow-100 text-yellow-600",
     },
     {
       label: "Próximas",

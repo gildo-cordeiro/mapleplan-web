@@ -32,7 +32,7 @@ export function useGoals(): UseGoalsState {
     setLoading(true)
     setError(null)
     try {
-      const data = await goalService.getGoals(token)
+      const data = await goalService.getGoals(token, 3)
       setGoals(data)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao buscar metas')

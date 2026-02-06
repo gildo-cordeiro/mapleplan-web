@@ -8,11 +8,12 @@
 export interface User {
   id: string
   email: string
-  name?: string
+  firstName?: string
   phone?: string
-  dateOfBirth?: string
+  coupleDateOfBirth?: string
   partnerEmail?: string
-  partnerName?: string
+  partnerFirstName?: string
+  partnerLastName?: string
   province?: string
   createdAt?: string
 }

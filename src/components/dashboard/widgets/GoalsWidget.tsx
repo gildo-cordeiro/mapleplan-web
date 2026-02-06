@@ -51,6 +51,15 @@ export default function GoalsWidget() {
         ) : goals.length === 0 ? (
           <div className="text-sm text-muted-foreground py-4 text-center">
             Nenhuma meta criada
+            <div className="pt-3">
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => navigate("/dashboard/goals")}
+                >
+                  Criar Meta
+                </Button>
+              </div>
           </div>
         ) : (
           <div className="space-y-3">

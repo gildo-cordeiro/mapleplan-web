@@ -15,12 +15,12 @@ export const goalService = {
   /**
    * Busca as metas do usuário
    */
-  getGoals: async (token: string, filters?: {
+  getGoals: async (token: string, limit: number, filters?: {
     status?: 'completed' | 'in-progress' | 'pending'
   }): Promise<Goal[]> => {
-    const response = await axios.get(`${API_URL}/goals`, {
+    const response = await axios.get(`${API_URL}/goals/widget`, {
       headers: getHeaders(token),
-      params: filters
+      params: { limit, filters }
     })
     return response.data
   },
