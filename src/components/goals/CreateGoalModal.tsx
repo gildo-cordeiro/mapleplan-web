@@ -25,7 +25,7 @@ export function CreateGoalModal({ isOpen, onOpenChange }: CreateGoalModalProps) 
     phase: "pre-departure",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault()
     console.log("Form submitted:", formData)
     onOpenChange(false)

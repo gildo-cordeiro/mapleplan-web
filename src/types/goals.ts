@@ -41,3 +41,10 @@ export interface Goal {
   progress: number
   assignedTo: string
 }
+
+export interface GoalsStatusCounts {
+  total: number
+  pending: number
+  inProgress: number
+  completed: number
+}

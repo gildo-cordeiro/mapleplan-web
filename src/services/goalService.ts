@@ -26,6 +26,21 @@ export const goalService = {
   },
 
   /**
+   * Busca contagem de metas por status
+   */
+  getGoalsStatusCounts: async (token: string): Promise<{
+    total: number
+    notStarted: number
+    inProgress: number
+    completed: number
+  }> => {
+    const response = await axios.get(`${API_URL}/goals/status-counts`, {
+      headers: getHeaders(token)
+    })
+    return response.data
+  },
+
+  /**
    * Busca uma meta específica
    */
   getGoal: async (token: string, goalId: string): Promise<Goal> => {
