@@ -36,6 +36,13 @@ export const goalService = {
     return response.data
   },
 
+  updateGoalStatus: async (token: string, goalId: string, status: GoalStatus): Promise<Goal> => {
+    const response = await axios.patch(`${API_URL}/goals/${goalId}/status`, { status }, {
+      headers: getHeaders(token)
+    })
+    return response.data
+  },
+
   /**
    * Busca uma meta específica
    */

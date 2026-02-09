@@ -8,6 +8,8 @@ import { Checkbox } from "@/components/ui/Checkbox"
 import { ChevronDown, ChevronUp, Edit2, Loader, Trash2 } from "lucide-react"
 import { Progress } from "@/components/ui/Progress"
 import { Goal, GoalsPriority, GoalStatus } from "@/types/goals"
+import { goalService } from "@/services/goalService"
+import { useAuth } from "@/app/context/AuthContext"
 
 interface GoalsListProps {
   goals: Goal[]
@@ -57,9 +59,9 @@ const getPriorityLabel = (priority: GoalsPriority) => {
 const formatDate = (dateString: string | null | undefined): string => {
   if (!dateString) return "Sem prazo"
   try {
-    return new Date(dateString).toLocaleString("pt-BR", { 
-      day: "2-digit", 
-      month: "2-digit", 
+    return new Date(dateString).toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
       year: "2-digit",
       hour: "2-digit",
       minute: "2-digit"
@@ -69,12 +71,22 @@ const formatDate = (dateString: string | null | undefined): string => {
   }
 }
 
-export function GoalsList({ goals, loading, error, filterPriority }: GoalsListProps & { filterPriority: string }) {
+export function GoalsList({ goals, loading, error, filterPriority, onGoalUpdated }: GoalsListProps & { filterPriority: string, onGoalUpdated?: () => void }) {
+  const { token } = useAuth()
   const [expandedGoal, setExpandedGoal] = useState<string | null>(null)
   const [completedGoals, setCompletedGoals] = useState<string[]>([])
 
-  const handleToggleComplete = (goalId: string) => {
-    setCompletedGoals((prev) => (prev.includes(goalId) ? prev.filter((id) => id !== goalId) : [...prev, goalId]))
+  const handleToggleComplete = async (goalId: string) => {
+
+    try {
+      if (!token) return
+      await goalService.updateGoalStatus(token, goalId, completedGoals.includes(goalId) ? GoalStatus.IN_PROGRESS : GoalStatus.COMPLETED)
+      setCompletedGoals((prev) => (prev.includes(goalId) ? prev.filter((id) => id !== goalId) : [...prev, goalId]))
+      onGoalUpdated?.()
+
+    } catch (err) {
+      console.error("Erro ao atualizar status da meta:", err)
+    }
   }
 
   return (
@@ -99,108 +111,107 @@ export function GoalsList({ goals, loading, error, filterPriority }: GoalsListPr
           {goals
             .filter(goal => filterPriority === "all" || goal.priority === filterPriority)
             .map((goal) => (
-            <Card key={goal.id} className="border-0 bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-800 dark:to-slate-800/50 shadow-md hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50 transition-all duration-300 hover:-translate-y-0.5 group">
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[var(--maple-primary)]/0 to-[var(--maple-primary)]/0 group-hover:from-[var(--maple-primary)]/5 group-hover:to-[var(--maple-primary)]/0 transition-all duration-300 rounded-lg" />
-              <CardContent className="p-5 relative z-10">
-                <div className="space-y-3">
-                  {/* Goal Header with Title and Metadata */}
-                  <div className="flex items-start gap-3">
-                    <Checkbox
-                      checked={completedGoals.includes(goal.id) || goal.status === GoalStatus.COMPLETED}
-                      onCheckedChange={() => handleToggleComplete(goal.id)}
-                      className="mt-1 w-5 h-5 accent-[var(--maple-primary)]"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                        <div className="flex-1 min-w-0">
-                          <h3
-                            className={`font-semibold text-foreground truncate ${
-                              completedGoals.includes(goal.id) || goal.status === GoalStatus.COMPLETED
+              <Card key={goal.id} className="border-0 bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-800 dark:to-slate-800/50 shadow-md hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50 transition-all duration-300 hover:-translate-y-0.5 group">
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[var(--maple-primary)]/0 to-[var(--maple-primary)]/0 group-hover:from-[var(--maple-primary)]/5 group-hover:to-[var(--maple-primary)]/0 transition-all duration-300 rounded-lg" />
+                <CardContent className="p-5 relative z-10">
+                  <div className="space-y-3">
+                    {/* Goal Header with Title and Metadata */}
+                    <div className="flex items-start gap-3">
+                      <Checkbox
+                        checked={completedGoals.includes(goal.id) || goal.status === GoalStatus.COMPLETED}
+                        onCheckedChange={() => handleToggleComplete(goal.id)}
+                        className="mt-1 w-5 h-5 accent-[var(--maple-primary)]"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <h3
+                              className={`font-semibold text-foreground truncate ${completedGoals.includes(goal.id) || goal.status === GoalStatus.COMPLETED
                                 ? "line-through text-muted-foreground"
                                 : ""
-                            }`}
-                            title={goal.title}
+                                }`}
+                              title={goal.title}
+                            >
+                              {goal.title}
+                            </h3>
+                            {goal.description && (
+                              <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{goal.description}</p>
+                            )}
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setExpandedGoal(expandedGoal === goal.id ? null : goal.id)}
+                            className="shrink-0"
                           >
-                            {goal.title}
-                          </h3>
-                          {goal.description && (
-                            <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{goal.description}</p>
-                          )}
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setExpandedGoal(expandedGoal === goal.id ? null : goal.id)}
-                          className="shrink-0"
-                        >
-                          {expandedGoal === goal.id ? (
-                            <ChevronUp className="w-4 h-4" />
-                          ) : (
-                            <ChevronDown className="w-4 h-4" />
-                          )}
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Progress Bar */}
-                  <div className="flex items-center gap-3 sm:ml-7">
-                    <div className="flex-1">
-                      <Progress value={goal.progress} className="h-1.5" />
-                    </div>
-                    <span className="text-xs font-semibold text-muted-foreground whitespace-nowrap">{goal.progress}%</span>
-                  </div>
-
-                  {/* Badges Row */}
-                  <div className="flex flex-wrap gap-2 sm:ml-7">
-                    <Badge variant="outline" className={`text-xs ${getStatusColor(goal.status)}`}>
-                      {getStatusLabel(goal.status)}
-                    </Badge>
-                    <Badge variant="outline" className="text-xs bg-slate-100 text-slate-700">
-                      <span className={getPriorityColor(goal.priority)}>●</span>
-                      <span className="ml-1">{getPriorityLabel(goal.priority)}</span>
-                    </Badge>
-                  </div>
-
-                  {/* Expanded Details */}
-                  {expandedGoal === goal.id && (
-                    <div className="sm:ml-7 pt-3 border-t space-y-3">
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <div>
-                          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-2">Responsável</p>
-                          <p className="text-sm font-semibold text-foreground">{goal.assignedTo}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide mb-1">Prazo</p>
-                          <p className="text-sm font-medium text-foreground">{formatDate(goal.dueDate)}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide mb-1">Progresso</p>
-                          <p className="text-sm font-medium text-foreground">{goal.progress}%</p>
+                            {expandedGoal === goal.id ? (
+                              <ChevronUp className="w-4 h-4" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4" />
+                            )}
+                          </Button>
                         </div>
                       </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex gap-2 pt-2">
-                        <Button variant="outline" size="sm" className="flex-1 text-xs bg-transparent hover:bg-slate-100">
-                          <Edit2 className="w-3 h-3 mr-2" />
-                          Editar
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="flex-1 text-xs text-red-600 hover:text-red-600 hover:bg-red-50 bg-transparent"
-                        >
-                          <Trash2 className="w-3 h-3 mr-2" />
-                          Deletar
-                        </Button>
-                      </div>
                     </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+
+                    {/* Progress Bar */}
+                    <div className="flex items-center gap-3 sm:ml-7">
+                      <div className="flex-1">
+                        <Progress value={goal.progress} className="h-1.5" />
+                      </div>
+                      <span className="text-xs font-semibold text-muted-foreground whitespace-nowrap">{goal.progress}%</span>
+                    </div>
+
+                    {/* Badges Row */}
+                    <div className="flex flex-wrap gap-2 sm:ml-7">
+                      <Badge variant="outline" className={`text-xs ${getStatusColor(goal.status)}`}>
+                        {getStatusLabel(goal.status)}
+                      </Badge>
+                      <Badge variant="outline" className="text-xs bg-slate-100 text-slate-700">
+                        <span className={getPriorityColor(goal.priority)}>●</span>
+                        <span className="ml-1">{getPriorityLabel(goal.priority)}</span>
+                      </Badge>
+                    </div>
+
+                    {/* Expanded Details */}
+                    {expandedGoal === goal.id && (
+                      <div className="sm:ml-7 pt-3 border-t space-y-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                          <div>
+                            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-2">Responsável</p>
+                            <p className="text-sm font-semibold text-foreground">{goal.assignedTo}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide mb-1">Prazo</p>
+                            <p className="text-sm font-medium text-foreground">{formatDate(goal.dueDate)}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide mb-1">Progresso</p>
+                            <p className="text-sm font-medium text-foreground">{goal.progress}%</p>
+                          </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex gap-2 pt-2">
+                          <Button variant="outline" size="sm" className="flex-1 text-xs bg-transparent hover:bg-slate-100">
+                            <Edit2 className="w-3 h-3 mr-2" />
+                            Editar
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-1 text-xs text-red-600 hover:text-red-600 hover:bg-red-50 bg-transparent"
+                          >
+                            <Trash2 className="w-3 h-3 mr-2" />
+                            Deletar
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
         </div>
       )}
     </div>
