@@ -106,16 +106,17 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
   }
 
   return (
-    <Card className="rounded-xl bg-white shadow-lg">
-      <CardHeader className="space-y-1 pb-4">
+    <Card className="border-0 bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-800 dark:to-slate-800/50 shadow-md hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50 transition-all duration-300 rounded-2xl group overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[var(--maple-primary)]/0 to-[var(--maple-primary)]/0 group-hover:from-[var(--maple-primary)]/5 group-hover:to-[var(--maple-primary)]/0 transition-all duration-300 rounded-2xl" />
+      <CardHeader className="space-y-1 pb-4 relative z-10">
         <CardTitle className="text-2xl font-bold">Bem-vindo ao MaplePlan</CardTitle>
         <CardDescription className="text-sm">Organize seu plano de imigração compartilhado</CardDescription>
       </CardHeader>
-      <CardContent className="px-6 pb-8 pt-2">
+      <CardContent className="px-6 pb-8 pt-2 relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 gap-2 bg-muted/40 rounded-md p-1">
-            <TabsTrigger value="login" className="py-2 rounded-md">Entrar</TabsTrigger>
-            <TabsTrigger value="signup" className="py-2 rounded-md">Criar Conta</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 gap-2 bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 rounded-lg p-1">
+            <TabsTrigger value="login" className="py-2 rounded-lg transition-all duration-300 data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">Entrar</TabsTrigger>
+            <TabsTrigger value="signup" className="py-2 rounded-lg transition-all duration-300 data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">Criar Conta</TabsTrigger>
           </TabsList>
 
           {/* Login Tab */}
@@ -129,7 +130,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="login-email">Email</Label>
+                <Label htmlFor="login-email" className="text-sm font-semibold">Email</Label>
                 <Input
                   id="login-email"
                   type="email"
@@ -137,12 +138,12 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
                   disabled={loading}
-                  className="h-10"
+                  className="h-10 border-slate-200 dark:border-slate-700 focus:border-[var(--maple-primary)] transition-all duration-300"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="login-password">Senha</Label>
+                <Label htmlFor="login-password" className="text-sm font-semibold">Senha</Label>
                 <div className="relative">
                   <Input
                     id="login-password"
@@ -151,7 +152,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                     disabled={loading}
-                    className="h-10 pr-10"
+                    className="h-10 pr-10 border-slate-200 dark:border-slate-700 focus:border-[var(--maple-primary)] transition-all duration-300"
                   />
                   <button
                     type="button"
@@ -167,7 +168,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
                 <button
                   type="button"
                   onClick={handleForgotPassword}
-                  className="text-sm text-emerald-600 hover:underline font-medium"
+                  className="text-sm text-[var(--maple-primary)] hover:text-[var(--maple-dark)] font-medium transition-colors duration-300"
                 >
                   Esqueci a senha
                 </button>
@@ -175,7 +176,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
 
               <Button
                 type="submit"
-                className="w-full bg-emerald-700 hover:bg-emerald-800 text-white h-10 rounded-md"
+                className="w-full bg-gradient-to-r from-[var(--maple-primary)] to-[var(--maple-dark)] hover:shadow-lg hover:shadow-[var(--maple-primary)]/30 text-white h-10 rounded-lg font-semibold transition-all duration-300"
                 disabled={loading}
               >
                 {loading ? "Entrando..." : "Entrar"}
@@ -194,7 +195,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="signup-email">Email</Label>
+                <Label htmlFor="signup-email" className="text-sm font-semibold">Email</Label>
                 <Input
                   id="signup-email"
                   type="email"
@@ -202,12 +203,12 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
                   value={signupEmail}
                   onChange={(e) => setSignupEmail(e.target.value)}
                   disabled={loading}
-                  className="h-10"
+                  className="h-10 border-slate-200 dark:border-slate-700 focus:border-[var(--maple-primary)] transition-all duration-300"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="signup-password">Senha</Label>
+                <Label htmlFor="signup-password" className="text-sm font-semibold">Senha</Label>
                 <div className="relative">
                   <Input
                     id="signup-password"
@@ -216,7 +217,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
                     value={signupPassword}
                     onChange={(e) => setSignupPassword(e.target.value)}
                     disabled={loading}
-                    className="h-10 pr-10"
+                    className="h-10 pr-10 border-slate-200 dark:border-slate-700 focus:border-[var(--maple-primary)] transition-all duration-300"
                   />
                   <button
                     type="button"
@@ -229,7 +230,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirmar Senha</Label>
+                <Label htmlFor="confirm-password" className="text-sm font-semibold">Confirmar Senha</Label>
                 <div className="relative">
                   <Input
                     id="confirm-password"
@@ -238,7 +239,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     disabled={loading}
-                    className="h-10 pr-10"
+                    className="h-10 pr-10 border-slate-200 dark:border-slate-700 focus:border-[var(--maple-primary)] transition-all duration-300"
                   />
                   <button
                     type="button"
@@ -252,15 +253,15 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
 
               <Button
                 type="submit"
-                className="w-full bg-emerald-700 hover:bg-emerald-800 text-white h-10 rounded-md"
+                className="w-full bg-gradient-to-r from-[var(--maple-primary)] to-[var(--maple-dark)] hover:shadow-lg hover:shadow-[var(--maple-primary)]/30 text-white h-10 rounded-lg font-semibold transition-all duration-300"
                 disabled={loading}
               >
                 {loading ? "Criando Conta..." : "Criar Conta Compartilhada"}
               </Button>
 
-              <p className="text-xs text-gray-500 text-center">
+              <p className="text-xs text-muted-foreground text-center">
                 Ao criar uma conta, você concorda com nossos{" "}
-                <a href="#" className="text-emerald-700 hover:underline">
+                <a href="#" className="text-[var(--maple-primary)] hover:text-[var(--maple-dark)] transition-colors duration-300">
                   Termos de Serviço
                 </a>
               </p>

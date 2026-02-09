@@ -10,12 +10,12 @@ import { GoalStatus } from "@/types/goals"
 
 export default function GoalsWidget() {
   const navigate = useNavigate()
-  const { goals, loading, error } = useGoals()
+  const { goalsWidget, loading, error } = useGoals()
 
   const getStatusBadge = (status: GoalStatus) => {
     if (status === GoalStatus.COMPLETED) return "Concluído"
     if (status === GoalStatus.IN_PROGRESS) return "Em Andamento"
-    return "Pendente"
+    return "Não Iniciado"
   }
 
   const getStatusColor = (status: GoalStatus) => {
@@ -30,15 +30,16 @@ export default function GoalsWidget() {
   }
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="border-0 bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-800 dark:to-slate-800/50 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[var(--maple-primary)]/0 to-[var(--maple-primary)]/0 group-hover:from-[var(--maple-primary)]/5 group-hover:to-[var(--maple-primary)]/0 transition-all duration-300" />
+      <CardHeader className="relative z-10">
         <CardTitle className="flex items-center gap-2">
-          <Flag className="w-5 h-5" />
+          <Flag className="w-5 h-5 text-[var(--maple-primary)]" />
           Metas
         </CardTitle>
         <CardDescription>Seus objetivos de alto nível</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative z-10">
         {loading ? (
           <div className="flex items-center justify-center py-8">
             <Loader className="w-5 h-5 animate-spin text-muted-foreground" />
@@ -48,13 +49,13 @@ export default function GoalsWidget() {
           <div className="text-sm text-red-600 dark:text-red-400 py-4">
             Erro ao carregar metas: {error}
           </div>
-        ) : goals.length === 0 ? (
+        ) : goalsWidget.length === 0 ? (
           <div className="text-sm text-muted-foreground py-4 text-center">
             Nenhuma meta criada
             <div className="pt-3">
               <Button
                 variant="outline"
-                className="w-full"
+                className="w-full border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300"
                 onClick={() => navigate("/dashboard/goals")}
               >
                 Criar Meta
@@ -63,16 +64,16 @@ export default function GoalsWidget() {
           </div>
         ) : (
           <div className="space-y-3">
-            {goals.map((goal) => (
+            {goalsWidget.map((goal) => (
               <div
                 key={goal.id}
-                className="flex items-center justify-between p-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors"
+                className="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 border border-slate-200/50 dark:border-slate-600/30 hover:border-[var(--maple-primary)]/30"
               >
                 <div className="flex items-center gap-3 flex-1">
                   {getIcon(goal.status)}
                   <div className="flex-1">
                     <span
-                      className={goal.status === GoalStatus.COMPLETED ? "line-through text-muted-foreground" : "text-foreground"}
+                      className={goal.status === GoalStatus.COMPLETED ? "line-through text-muted-foreground" : "text-foreground font-medium"}
                     >
                       {goal.title}
                     </span>
@@ -83,20 +84,18 @@ export default function GoalsWidget() {
                     )}
                   </div>
                 </div>
-                <Badge className={getStatusColor(goal.status)}>{getStatusBadge(goal.status)}</Badge>
+                <Badge className={`${getStatusColor(goal.status)} font-semibold px-3 py-1`}>{getStatusBadge(goal.status)}</Badge>
               </div>
             ))}
-            {goals.length > 3 && (
-              <div className="pt-3">
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => navigate("/dashboard/goals")}
-                >
-                  Ver mais ({goals.length - 3} {goals.length - 3 === 1 ? 'meta' : 'metas'})
-                </Button>
-              </div>
-            )}
+            <div className="pt-3\">
+              <Button
+                variant="outline"
+                className="w-full border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300"
+                onClick={() => navigate("/dashboard/goals")}
+              >
+                Ver mais
+              </Button>
+            </div>
           </div>
         )}
       </CardContent>

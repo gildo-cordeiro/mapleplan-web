@@ -2,7 +2,6 @@
  * Tipos relacionados a metas
  */
 
-import { User } from "./auth"
 
 /**
  * Status possível de uma meta
@@ -10,7 +9,7 @@ import { User } from "./auth"
 export enum GoalStatus {
   COMPLETED = "completed",
   IN_PROGRESS = "in-progress",
-  PENDING = "pending"
+  NOT_STARTED = "not-started"
 }
 
 export enum GoalsPriority {
@@ -42,9 +41,23 @@ export interface Goal {
   assignedTo: string
 }
 
+export interface CreateGoal {
+  title: string
+  targetAmount: number
+  currentAmount: number
+  description?: string
+  status: GoalStatus
+  phase: GoalsPhase
+  priority: GoalsPriority
+  dueDate: string
+  progress: number
+  assignedToUser: string | null
+  assignedToCouple: string | null
+}
+
 export interface GoalsStatusCounts {
   total: number
-  pending: number
+  notStarted: number
   inProgress: number
   completed: number
 }

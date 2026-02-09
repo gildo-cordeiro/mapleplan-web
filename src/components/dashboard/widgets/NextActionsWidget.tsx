@@ -30,12 +30,13 @@ export default function NextActionsWidget() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>A Fazer Agora</CardTitle>
+    <Card className="border-0 bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-800 dark:to-slate-800/50 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[var(--maple-primary)]/0 to-[var(--maple-primary)]/0 group-hover:from-[var(--maple-primary)]/5 group-hover:to-[var(--maple-primary)]/0 transition-all duration-300" />
+      <CardHeader className="relative z-10">
+        <CardTitle className="flex items-center gap-2">Próximas Ações</CardTitle>
         <CardDescription>Tarefas prioritárias para sua jornada</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative z-10">
         {loading ? (
           <div className="flex items-center justify-center py-8">
             <Loader className="w-5 h-5 animate-spin text-muted-foreground" />
@@ -54,20 +55,20 @@ export default function NextActionsWidget() {
             {tasks.map((task) => (
               <div
                 key={task.id}
-                className="flex items-start justify-between p-4 rounded-lg bg-muted hover:bg-muted/80 transition-colors"
+                className="flex items-start justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 border border-slate-200/50 dark:border-slate-600/30 hover:border-[var(--maple-primary)]/30"
               >
                 <div className="flex-1 space-y-2">
-                  <p className="font-medium text-foreground">{task.title}</p>
+                  <p className="font-semibold text-foreground">{task.title}</p>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <Badge variant="secondary" className="gap-1">
+                    <Badge variant="secondary" className="gap-1 font-semibold px-3 py-1">
                       <User className="w-3 h-3" />
                       {getPartnerBadge(task.assignedTo)}
                     </Badge>
-                    <Badge variant="outline" className="gap-1">
+                    <Badge variant="outline" className="gap-1 font-semibold px-3 py-1">
                       <Calendar className="w-3 h-3" />
                       {new Date(task.dueDate).toLocaleDateString("pt-BR")}
                     </Badge>
-                    <Badge className={getPriorityColor(task.priority)}>
+                    <Badge className={`${getPriorityColor(task.priority)} font-semibold px-3 py-1`}>
                       {task.priority === "high" ? "Alta" : task.priority === "medium" ? "Média" : "Baixa"}
                     </Badge>
                   </div>
@@ -76,7 +77,7 @@ export default function NextActionsWidget() {
             ))}
           </div>
         )}
-        <Button variant="outline" className="w-full mt-4 gap-2 bg-transparent">
+        <Button variant="outline" className="w-full mt-4 gap-2 bg-transparent border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300">
           Ver Checklist Completo
           <ArrowRight className="w-4 h-4" />
         </Button>

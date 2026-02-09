@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Goal } from '@/types'
 import { getHeaders } from '@/lib/api'
+import { CreateGoal, GoalsStatusCounts, GoalStatus } from '@/types/goals'
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -15,12 +16,12 @@ export const goalService = {
   /**
    * Busca as metas do usuário
    */
-  getGoals: async (token: string, limit: number, filters?: {
-    status?: 'completed' | 'in-progress' | 'pending'
+  getGoals: async (token: string, limit?: number, filters?: {
+    status?: GoalStatus
   }): Promise<Goal[]> => {
-    const response = await axios.get(`${API_URL}/goals/widget`, {
+    const response = await axios.get(`${API_URL}/goals/`, {
       headers: getHeaders(token),
-      params: { limit, filters }
+      params: limit ? { limit, ...filters } : filters
     })
     return response.data
   },
@@ -28,12 +29,7 @@ export const goalService = {
   /**
    * Busca contagem de metas por status
    */
-  getGoalsStatusCounts: async (token: string): Promise<{
-    total: number
-    notStarted: number
-    inProgress: number
-    completed: number
-  }> => {
+  getGoalsStatusCounts: async (token: string): Promise<GoalsStatusCounts> => {
     const response = await axios.get(`${API_URL}/goals/status-counts`, {
       headers: getHeaders(token)
     })
@@ -53,8 +49,8 @@ export const goalService = {
   /**
    * Cria uma nova meta
    */
-  createGoal: async (token: string, goal: Omit<Goal, 'id'>): Promise<Goal> => {
-    const response = await axios.post(`${API_URL}/goals`, goal, {
+  createGoal: async (token: string, goal: CreateGoal): Promise<Goal> => {
+    const response = await axios.post(`${API_URL}/goals/`, goal, {
       headers: getHeaders(token)
     })
     return response.data

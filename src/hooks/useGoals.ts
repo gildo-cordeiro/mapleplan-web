@@ -5,6 +5,7 @@ import { Goal } from '@/types'
 
 interface UseGoalsState {
   goals: Goal[]
+  goalsWidget: Goal[]
   loading: boolean
   error: string | null
   refetch: () => Promise<void>
@@ -15,6 +16,7 @@ interface UseGoalsState {
  */
 export function useGoals(): UseGoalsState {
   const { token } = useAuth()
+  const [goalsWidget, setGoalsWidget] = useState<Goal[]>([])
   const [goals, setGoals] = useState<Goal[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -32,8 +34,10 @@ export function useGoals(): UseGoalsState {
     setLoading(true)
     setError(null)
     try {
-      const data = await goalService.getGoals(token, 3)
+      const dataWidget = await goalService.getWidgetGoals(token)
+      const data = await goalService.getGoals(token)
       setGoals(data)
+      setGoalsWidget(dataWidget)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao buscar metas')
       console.error('Erro ao buscar metas:', err)
@@ -46,5 +50,5 @@ export function useGoals(): UseGoalsState {
     await fetchGoals()
   }
 
-  return { goals, loading, error, refetch }
+  return { goals, goalsWidget, loading, error, refetch }
 }

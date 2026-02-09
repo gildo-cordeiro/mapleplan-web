@@ -1,70 +1,54 @@
-import { useAuth } from "@/app/context/AuthContext"
 import { Card, CardContent } from "@/components/ui/Card"
-import { CheckCircle2, Clock, Target, TrendingUp } from "lucide-react"
-import { useState, useEffect } from "react"
-import { goalService } from "@/services/goalService"
-import { GoalsStatusCounts } from "@/types/goals"
+import { CheckCircle2, Clock, ListTodo, TrendingUp } from "lucide-react"
 
-interface GoalsStatsProps {
-  refetchTrigger?: number
+interface ChecklistTask {
+  id: string
+  title: string
+  completed: boolean
+  responsible: "partner1" | "partner2" | "shared" | "unassigned"
+  priority: "urgent" | "normal"
+  dueDate: string
+  description?: string
 }
 
-export function GoalsStats({ refetchTrigger = 0 }: GoalsStatsProps) {
-  const { token } = useAuth()
-  const [goalsStatusCounts, setGoalsStatusCounts] = useState<GoalsStatusCounts>({
-    total: 0,
-    notStarted: 0,
-    inProgress: 0,
-    completed: 0,
-  })
-  const [loading, setLoading] = useState(true)
+interface ChecklistStatsProps {
+  items: ChecklistTask[]
+}
 
-  useEffect(() => {
-    if (!token) return
+export function ChecklistStats({ items }: ChecklistStatsProps) {
+  const total = items.length
+  const completed = items.filter(item => item.completed).length
+  const pending = total - completed
+  const completionPercentage = total > 0 ? Math.round((completed / total) * 100) : 0
 
-    const fetchStats = async () => {
-      try {
-        setLoading(true)
-        const data = await goalService.getGoalsStatusCounts(token)
-        setGoalsStatusCounts(data)
-      } catch (error) {
-        console.error('Erro ao buscar estatísticas:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchStats()
-  }, [token, refetchTrigger])
-  
   const stats = [
     {
-      label: "Metas Totais",
-      value: goalsStatusCounts.total.toString(),
-      icon: Target,
+      label: "Total de Tarefas",
+      value: total.toString(),
+      icon: ListTodo,
       gradient: "from-blue-500 to-blue-600",
       bgGradient: "from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900",
     },
     {
-      label: "Pendente",
-      value: goalsStatusCounts.notStarted.toString(),
+      label: "Pendentes",
+      value: pending.toString(),
       icon: Clock,
-      gradient: "from-gray-500 to-gray-600",
-      bgGradient: "from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900",
-    },
-    {
-      label: "Em Progresso",
-      value: goalsStatusCounts.inProgress.toString(),
-      icon: TrendingUp,
       gradient: "from-amber-500 to-amber-600",
       bgGradient: "from-amber-50 to-amber-100 dark:from-amber-950 dark:to-amber-900",
     },
     {
       label: "Concluídas",
-      value: goalsStatusCounts.completed.toString(),
+      value: completed.toString(),
       icon: CheckCircle2,
       gradient: "from-green-500 to-green-600",
       bgGradient: "from-green-50 to-green-100 dark:from-green-950 dark:to-green-900",
+    },
+    {
+      label: "Progresso",
+      value: `${completionPercentage}%`,
+      icon: TrendingUp,
+      gradient: "from-purple-500 to-purple-600",
+      bgGradient: "from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900",
     }
   ]
 
@@ -79,7 +63,7 @@ export function GoalsStats({ refetchTrigger = 0 }: GoalsStatsProps) {
                 <div className="flex-1">
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{stat.label}</p>
                   <p className={`text-3xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mt-3`}>
-                    {loading ? '-' : stat.value}
+                    {stat.value}
                   </p>
                 </div>
                 <div className={`p-3 rounded-xl bg-gradient-to-br ${stat.gradient} shadow-lg`}>

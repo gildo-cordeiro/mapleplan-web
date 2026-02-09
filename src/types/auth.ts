@@ -11,6 +11,8 @@ export interface User {
   firstName: string
   phone?: string
   coupleDateOfBirth?: string
+  coupleId?: string
+  partnerId?: string
   partnerEmail?: string
   partnerFirstName?: string
   partnerLastName?: string
