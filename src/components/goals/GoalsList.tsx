@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/Progress"
 import { Goal, GoalsPriority, GoalStatus } from "@/types/goals"
 import { goalService } from "@/services/goalService"
 import { useAuth } from "@/app/context/AuthContext"
+import { UpdateGoalModal } from "./UpdateGoalModal"
 
 interface GoalsListProps {
   goals: Goal[]
@@ -75,6 +76,8 @@ export function GoalsList({ goals, loading, error, filterPriority, onGoalUpdated
   const { token } = useAuth()
   const [expandedGoal, setExpandedGoal] = useState<string | null>(null)
   const [completedGoals, setCompletedGoals] = useState<string[]>([])
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [selectedGoalId, setSelectedGoalId] = useState<string>("")
 
   const handleToggleComplete = async (goalId: string) => {
 
@@ -193,7 +196,11 @@ export function GoalsList({ goals, loading, error, filterPriority, onGoalUpdated
 
                         {/* Action Buttons */}
                         <div className="flex gap-2 pt-2">
-                          <Button variant="outline" size="sm" className="flex-1 text-xs bg-transparent hover:bg-slate-100">
+                          <Button variant="outline" size="sm" className="flex-1 text-xs bg-transparent hover:bg-slate-100"
+                            onClick={() => {
+                              console.log("open modal", goal.id)
+                              setIsUpdateModalOpen(true); setSelectedGoalId(goal.id)
+                            }}>
                             <Edit2 className="w-3 h-3 mr-2" />
                             Editar
                           </Button>
@@ -212,6 +219,7 @@ export function GoalsList({ goals, loading, error, filterPriority, onGoalUpdated
                 </CardContent>
               </Card>
             ))}
+          <UpdateGoalModal goalId={selectedGoalId} isOpen={isUpdateModalOpen} onOpenChange={setIsUpdateModalOpen} onUpdated={onGoalUpdated} />
         </div>
       )}
     </div>

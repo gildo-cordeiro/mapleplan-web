@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Goal } from '@/types'
 import { getHeaders } from '@/lib/api'
-import { CreateGoal, GoalsStatusCounts, GoalStatus } from '@/types/goals'
+import { CreateGoal, GoalsStatusCounts, GoalStatus, UpdateFormData } from '@/types/goals'
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -66,7 +66,8 @@ export const goalService = {
   /**
    * Atualiza uma meta existente
    */
-  updateGoal: async (token: string, goalId: string, updates: Partial<Goal>): Promise<Goal> => {
+  updateGoal: async (token: string, goalId: string, updates: UpdateFormData): Promise<Goal> => {
+    console.log("Updating goal with data:", updates)
     const response = await axios.put(`${API_URL}/goals/${goalId}`, updates, {
       headers: getHeaders(token)
     })

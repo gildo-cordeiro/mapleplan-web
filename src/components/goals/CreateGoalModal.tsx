@@ -23,8 +23,6 @@ interface CreateGoalModalProps {
 
 const initialFormData: CreateGoal = {
   title: "",
-  targetAmount: 0,
-  currentAmount: 0,
   description: "",
   status: GoalStatus.NOT_STARTED,
   phase: GoalsPhase.PRE_DEPARTURE,
