@@ -1,6 +1,6 @@
 import type React from "react"
 import { useState } from "react"
-import Sidebar from '@/components/dashboard/Sidebar'
+import Sidebar from '@/components/dashboard/sidebar'
 import MobileNavigation from '@/components/dashboard/MobileNavigation'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { useEffect } from "react"
