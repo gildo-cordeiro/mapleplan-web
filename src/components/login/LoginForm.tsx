@@ -106,7 +106,7 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
   }
 
   return (
-    <Card className="border-0 bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-800 dark:to-slate-800/50 shadow-md hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50 transition-all duration-300 rounded-2xl group overflow-hidden">
+    <Card className="border-0 bg-gradient-to-br from-[var(--surface-1)] to-[var(--surface-2)] shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl group overflow-hidden">
       <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[var(--maple-primary)]/0 to-[var(--maple-primary)]/0 group-hover:from-[var(--maple-primary)]/5 group-hover:to-[var(--maple-primary)]/0 transition-all duration-300 rounded-2xl" />
       <CardHeader className="space-y-1 pb-4 relative z-10">
         <CardTitle className="text-2xl font-bold">Bem-vindo ao MaplePlan</CardTitle>
@@ -114,9 +114,9 @@ export default function LoginForm({ onAccountCreated }: LoginFormProps) {
       </CardHeader>
       <CardContent className="px-6 pb-8 pt-2 relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 gap-2 bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 rounded-lg p-1">
-            <TabsTrigger value="login" className="py-2 rounded-lg transition-all duration-300 data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">Entrar</TabsTrigger>
-            <TabsTrigger value="signup" className="py-2 rounded-lg transition-all duration-300 data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">Criar Conta</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 gap-2 bg-gradient-to-r from-[var(--surface-2)] to-[var(--surface-1)] rounded-lg p-1">
+            <TabsTrigger value="login" className="py-2 rounded-lg transition-all duration-300 data-[state=active]:bg-[var(--surface-1)]">Entrar</TabsTrigger>
+            <TabsTrigger value="signup" className="py-2 rounded-lg transition-all duration-300 data-[state=active]:bg-[var(--surface-1)]">Criar Conta</TabsTrigger>
           </TabsList>
 
           {/* Login Tab */}

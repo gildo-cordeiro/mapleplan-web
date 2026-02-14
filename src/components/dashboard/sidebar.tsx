@@ -24,9 +24,9 @@ export default function Sidebar() {
   ]
 
   return (
-    <aside className="w-64 bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border-r border-slate-200 dark:border-slate-700/50 flex flex-col h-screen shadow-xl dark:shadow-slate-900/50">
+    <aside className="w-64 bg-gradient-to-b from-[var(--sidebar-bg-1)] via-[var(--sidebar-bg-2)] to-[var(--sidebar-bg-3)] border-r border-border flex flex-col h-screen shadow-xl">
       {/* Logo Section */}
-      <div className="p-6 border-b border-slate-200 dark:border-slate-700/50 bg-gradient-to-r from-white/50 to-transparent dark:from-slate-800/50 dark:to-transparent">
+      <div className="p-6 border-b border-border bg-sidebar/60">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--maple-primary)] to-[var(--maple-primary)]/70 flex items-center justify-center shadow-lg shadow-[var(--maple-primary)]/30 transform hover:scale-110 transition-transform duration-300">
             <span className="text-white font-bold text-xl">🍁</span>
@@ -71,7 +71,7 @@ export default function Sidebar() {
       </nav>
 
       {/* Logout button */}
-      <div className="p-4 border-t border-slate-200 dark:border-slate-700/50 bg-gradient-to-r from-white/50 to-transparent dark:from-slate-800/50 dark:to-transparent">
+      <div className="p-4 border-t border-border bg-sidebar/60">
         <Button
           className="w-full justify-start gap-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 dark:from-red-700 dark:to-red-800 dark:hover:from-red-800 dark:hover:to-red-900 text-white shadow-lg shadow-red-500/20 dark:shadow-red-900/40 hover:shadow-xl transition-all duration-300 rounded-lg font-semibold h-10"
           onClick={handleLogout}

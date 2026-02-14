@@ -89,7 +89,7 @@ export function CreateGoalModal({ isOpen, onOpenChange, onCreated }: CreateGoalM
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-800 dark:to-slate-800/50 border-0 shadow-md">
+      <DialogContent className="sm:max-w-md bg-gradient-to-br from-[var(--surface-1)] to-[var(--surface-2)] border-0 shadow-md">
         <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[var(--maple-primary)]/0 to-[var(--maple-primary)]/0 rounded-lg" />
         <DialogHeader className="relative z-10">
           <div className="flex items-center gap-3 mb-2">

@@ -92,7 +92,7 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <div className="min-h-screen bg-gradient-to-b from-slate-50/50 to-transparent dark:from-slate-900/30 dark:to-transparent">
+      <div className="min-h-screen bg-gradient-to-b from-[var(--app-bg-2)] to-transparent">
         <DashboardHeader couple={coupleNames} progress={progress} />
 
         <div className="px-4 py-8 md:px-6 lg:px-8">

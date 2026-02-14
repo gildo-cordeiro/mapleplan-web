@@ -43,28 +43,28 @@ export function GoalsStats({ refetchTrigger = 0 }: GoalsStatsProps) {
       value: goalsStatusCounts.total.toString(),
       icon: Target,
       gradient: "from-blue-500 to-blue-600",
-      bgGradient: "from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900",
+      bgGradient: "from-[var(--surface-1)] to-[var(--surface-2)]",
     },
     {
       label: "Pendente",
       value: goalsStatusCounts.notStarted.toString(),
       icon: Clock,
       gradient: "from-gray-500 to-gray-600",
-      bgGradient: "from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900",
+      bgGradient: "from-[var(--surface-1)] to-[var(--surface-2)]",
     },
     {
       label: "Em Progresso",
       value: goalsStatusCounts.inProgress.toString(),
       icon: TrendingUp,
       gradient: "from-amber-500 to-amber-600",
-      bgGradient: "from-amber-50 to-amber-100 dark:from-amber-950 dark:to-amber-900",
+      bgGradient: "from-[var(--surface-1)] to-[var(--surface-2)]",
     },
     {
       label: "Concluídas",
       value: goalsStatusCounts.completed.toString(),
       icon: CheckCircle2,
       gradient: "from-green-500 to-green-600",
-      bgGradient: "from-green-50 to-green-100 dark:from-green-950 dark:to-green-900",
+      bgGradient: "from-[var(--surface-1)] to-[var(--surface-2)]",
     }
   ]
 

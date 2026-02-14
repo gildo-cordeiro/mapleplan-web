@@ -13,7 +13,7 @@ export default function MobileNavigation() {
   ]
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white to-slate-50/80 dark:from-slate-800 dark:to-slate-900/80 border-t border-slate-200 dark:border-slate-700 backdrop-blur-sm flex justify-around items-center h-20 md:hidden shadow-2xl shadow-black/10 dark:shadow-[var(--maple-primary)]/20">
+    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[var(--surface-1)] to-[var(--surface-2)] border-t border-border backdrop-blur-sm flex justify-around items-center h-20 md:hidden shadow-2xl shadow-black/10">
         {menuItems.map((item) => {
           const Icon = item.icon
           return (
@@ -25,7 +25,7 @@ export default function MobileNavigation() {
                 cn(
                   "flex flex-col items-center justify-center w-full h-full gap-1 text-xs font-medium transition-all duration-300",
                   isActive 
-                    ? "text-[var(--maple-primary)] bg-gradient-to-t from-[var(--maple-primary)]/10 to-transparent dark:from-[var(--maple-primary)]/20" 
+                    ? "text-[var(--maple-primary)] bg-gradient-to-t from-[var(--maple-primary)]/10 to-transparent" 
                     : "text-muted-foreground hover:text-foreground",
                 )
               }

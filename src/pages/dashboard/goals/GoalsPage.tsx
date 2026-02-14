@@ -42,7 +42,7 @@ export default function GoalsPage() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col gap-8 h-full px-6 py-8 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950/20">
+      <div className="flex flex-col gap-8 h-full px-6 py-8 bg-gradient-to-br from-[var(--app-bg-1)] via-[var(--app-bg-2)] to-[var(--app-bg-3)]">
         {/* Header */}
         <GoalsHeader />
 

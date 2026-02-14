@@ -27,28 +27,28 @@ export function ChecklistStats({ items }: ChecklistStatsProps) {
       value: total.toString(),
       icon: ListTodo,
       gradient: "from-blue-500 to-blue-600",
-      bgGradient: "from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900",
+      bgGradient: "from-[var(--surface-1)] to-[var(--surface-2)]",
     },
     {
       label: "Pendentes",
       value: pending.toString(),
       icon: Clock,
       gradient: "from-amber-500 to-amber-600",
-      bgGradient: "from-amber-50 to-amber-100 dark:from-amber-950 dark:to-amber-900",
+      bgGradient: "from-[var(--surface-1)] to-[var(--surface-2)]",
     },
     {
       label: "Concluídas",
       value: completed.toString(),
       icon: CheckCircle2,
       gradient: "from-green-500 to-green-600",
-      bgGradient: "from-green-50 to-green-100 dark:from-green-950 dark:to-green-900",
+      bgGradient: "from-[var(--surface-1)] to-[var(--surface-2)]",
     },
     {
       label: "Progresso",
       value: `${completionPercentage}%`,
       icon: TrendingUp,
       gradient: "from-purple-500 to-purple-600",
-      bgGradient: "from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900",
+      bgGradient: "from-[var(--surface-1)] to-[var(--surface-2)]",
     }
   ]
 

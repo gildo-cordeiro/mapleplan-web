@@ -18,7 +18,7 @@ export function ChecklistFiltersToolbar({
   onAddNew,
 }: ChecklistFiltersToolbarProps) {
   return (
-    <div className="flex flex-col md:flex-row gap-3 items-start md:items-center justify-between p-4 bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-800 dark:to-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+    <div className="flex flex-col md:flex-row gap-3 items-start md:items-center justify-between p-4 bg-gradient-to-br from-[var(--surface-1)] to-[var(--surface-2)] border border-border rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
       <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
         <Select value={filterResponsible} onValueChange={onResponsibleChange}>
           <SelectTrigger className="w-full md:w-48 bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:border-[var(--maple-primary)]/30 transition-colors duration-300">
