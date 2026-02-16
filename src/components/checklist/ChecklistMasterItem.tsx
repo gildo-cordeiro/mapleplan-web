@@ -24,10 +24,10 @@ const PARTNER_AVATARS: Record<string, { initials: string; color: string }> = {
 }
 
 const getStatusColor = (isCompleted: boolean, isOverdue: boolean, isUpcoming: boolean) => {
-  if (isCompleted) return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-  if (isOverdue) return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-  if (isUpcoming) return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-  return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+  if (isCompleted) return "bg-[var(--surface-1)] text-[var(--maple-primary)] ring-2 ring-green-500"
+  if (isOverdue) return "bg-[var(--surface-1)] text-red-600 ring-2 ring-red-500"
+  if (isUpcoming) return "bg-[var(--surface-1)] text-amber-600 ring-2 ring-amber-500"
+  return "bg-[var(--surface-1)] text-blue-600 ring-2 ring-blue-500"
 }
 
 export function ChecklistMasterItem({ item }: ChecklistItemProps) {
@@ -99,7 +99,7 @@ export function ChecklistMasterItem({ item }: ChecklistItemProps) {
             </Badge>
             <Badge
               variant="outline"
-              className="text-xs bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200"
+              className="text-xs bg-[var(--surface-2)] text-foreground"
             >
               <span className={item.priority === "urgent" ? "text-red-600" : "text-green-600"}>●</span>
               <span className="ml-1">{priorityLabel}</span>
@@ -114,7 +114,7 @@ export function ChecklistMasterItem({ item }: ChecklistItemProps) {
 
           {/* Expanded Details */}
           {isExpanded && item.description && (
-            <div className="sm:ml-7 pt-3 border-t border-slate-200 dark:border-slate-700">
+            <div className="sm:ml-7 pt-3 border-t border-[var(--border)]">
               <p className="text-sm text-foreground">{item.description}</p>
             </div>
           )}

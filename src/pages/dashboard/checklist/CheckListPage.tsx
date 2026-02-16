@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout'
 import { MasterChecklistHeader } from '@/components/checklist/MasterChecklistHeader'
@@ -31,16 +29,16 @@ export default function ChecklistPage() {
   })
 
   const responsibleOptions = [
-    { value: "all", label: "Todas as Tarefas", color: "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700" },
-    { value: "partner1", label: "Minhas Tarefas", color: "bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800" },
-    { value: "partner2", label: "Tarefas do Parceiro", color: "bg-purple-100 hover:bg-purple-200 dark:bg-purple-900 dark:hover:bg-purple-800" },
-    { value: "shared", label: "Compartilhadas", color: "bg-cyan-100 hover:bg-cyan-200 dark:bg-cyan-900 dark:hover:bg-cyan-800" },
-    { value: "unassigned", label: "Não Atribuídas", color: "bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700" }
+    { value: "all", label: "Todas as Tarefas" },
+    { value: "partner1", label: "Minhas Tarefas" },
+    { value: "partner2", label: "Tarefas do Parceiro" },
+    { value: "shared", label: "Compartilhadas" },
+    { value: "unassigned", label: "Não Atribuídas" },
   ]
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col gap-8 h-full px-6 py-8 bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-amber-950/20">
+      <div className="flex flex-col gap-8 h-full px-6 py-8 bg-gradient-to-br from-[var(--app-bg-1)] via-[var(--app-bg-2)] to-[var(--app-bg-3)]">
         {/* Header */}
         <MasterChecklistHeader activePhase={activePhase} onPhaseChange={setActivePhase} />
 
@@ -60,10 +58,10 @@ export default function ChecklistPage() {
                   variant={filterResponsible === option.value ? "default" : "outline"}
                   size="sm"
                   onClick={() => setFilterResponsible(option.value)}
-                  className={`text-xs font-medium transition-all duration-200 border-0 ${
+                  className={`text-xs font-medium transition-all duration-200 border ${
                     filterResponsible === option.value
                       ? "bg-gradient-to-r from-[var(--maple-primary)] to-[var(--maple-primary)]/90 text-white shadow-lg shadow-[var(--maple-primary)]/30 scale-105"
-                      : `${option.color} text-foreground`
+                      : "bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-foreground border-border"
                   }`}
                 >
                   {option.label}

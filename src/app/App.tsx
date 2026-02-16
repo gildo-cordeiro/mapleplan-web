@@ -1,8 +1,11 @@
 import AppRouter from "@/app/router/Router"
+import { ThemeProvider } from "@/app/context/ThemeContext"
 
 function App() {
   return (
-    <AppRouter />
+    <ThemeProvider>
+      <AppRouter />
+    </ThemeProvider>
   )
 }
 
