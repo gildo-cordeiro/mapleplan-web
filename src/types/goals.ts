@@ -38,7 +38,7 @@ export interface Goal {
   progress: number
   assignedTo: string | null
   assignedToUser: string | null
-  assignedToCouple: string | null
+  assignedToProfile: string | null
 }
 
 export interface CreateGoal {
@@ -50,7 +50,7 @@ export interface CreateGoal {
   dueDate: string
   progress: number
   assignedToUser: string | null
-  assignedToCouple: string | null
+  assignedToProfile: string | null
 }
 
 export interface UpdateFormData {
@@ -60,7 +60,7 @@ export interface UpdateFormData {
     priority: GoalsPriority
     phase: GoalsPhase
     assignedToUser: string | null
-    assignedToCouple: string | null
+    assignedToProfile: string | null
     status: GoalStatus
 }
 

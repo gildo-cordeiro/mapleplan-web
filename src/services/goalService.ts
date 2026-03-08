@@ -78,7 +78,8 @@ export const goalService = {
    * Marca uma meta como concluída
    */
   completeGoal: async (token: string, goalId: string): Promise<Goal> => {
-    const response = await axios.patch(`${API_URL}/goals/${goalId}/complete`, {}, {
+    // Uses updateGoalStatus endpoint with "completed" status
+    const response = await axios.patch(`${API_URL}/goals/${goalId}/status`, { status: "completed" }, {
       headers: getHeaders(token)
     })
     return response.data

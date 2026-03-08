@@ -32,7 +32,7 @@ export function UpdateGoalModal({ goalId, isOpen, onOpenChange, onUpdated }: Upd
         priority: GoalsPriority.MEDIUM,
         phase: GoalsPhase.PRE_DEPARTURE,
         assignedToUser: null,
-        assignedToCouple: null
+        assignedToProfile: null
     })
 
     const userId = user?.id ?? ""
@@ -80,7 +80,7 @@ export function UpdateGoalModal({ goalId, isOpen, onOpenChange, onUpdated }: Upd
                     priority: fetchedGoal.priority || GoalsPriority.MEDIUM,
                     phase: fetchedGoal.phase || GoalsPhase.PRE_DEPARTURE,
                     assignedToUser: fetchedGoal.assignedToUser || null,
-                    assignedToCouple: fetchedGoal.assignedToCouple || null
+                    assignedToProfile: fetchedGoal.assignedToProfile || null
                 })
             } catch (err) {
                 setError("Erro ao carregar a meta")
@@ -94,7 +94,7 @@ export function UpdateGoalModal({ goalId, isOpen, onOpenChange, onUpdated }: Upd
         e.preventDefault()
         if (!token || !goalId) return
 
-        const isAmboSelected = formData.assignedToCouple === coupleId
+        const isAmboSelected = formData.assignedToProfile === coupleId
 
         const updateData: UpdateFormData = {
             title: formData.title,
@@ -104,7 +104,7 @@ export function UpdateGoalModal({ goalId, isOpen, onOpenChange, onUpdated }: Upd
             priority: formData.priority,
             phase: formData.phase,
             assignedToUser:  formData.assignedToUser,
-            assignedToCouple: formData.assignedToCouple
+            assignedToProfile: formData.assignedToProfile
         }
 
         if (!updateData.title || !updateData.phase) {
@@ -224,12 +224,12 @@ export function UpdateGoalModal({ goalId, isOpen, onOpenChange, onUpdated }: Upd
                         <div className="space-y-2">
                             <Label htmlFor="assignedTo" className="text-sm font-semibold text-foreground">Atribuir a *</Label>
                             <Select
-                                value={formData.assignedToCouple === coupleId ? coupleId : formData.assignedToUser || ""}
+                                value={formData.assignedToProfile === coupleId ? coupleId : formData.assignedToUser || ""}
                                 onValueChange={(value) => {
                                     if (value === coupleId) {
-                                        setFormData({ ...formData, assignedToCouple: coupleId, assignedToUser: null })
+                                        setFormData({ ...formData, assignedToProfile: coupleId, assignedToUser: null })
                                     } else {
-                                        setFormData({ ...formData, assignedToUser: value, assignedToCouple: null })
+                                        setFormData({ ...formData, assignedToUser: value, assignedToProfile: null })
                                     }
                                 }}
                             >
